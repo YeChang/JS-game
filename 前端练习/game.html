@@ -7,8 +7,8 @@
         canvas {
             border: 1px black solid;
         }
-
     </style>
+    <script src='guagame.js'></script>
 </head>
 <body>
     <canvas id="id-canvas" width="400" height="300"></canvas>
@@ -28,11 +28,20 @@ var Paddle = function () {
         y: 250,
         speed :10,
     }
+    o.move = function (x) {
+        if (x < 0) {
+            x = 0
+        }
+        if (x > 400 - o.img.width) {
+            x = 400 - o.img.width
+        }
+        o.x = x
+    }
     o.moveLeft = function () {
-      o.x -= this.speed
+        o.move(o.x - o.speed)
     }
     o.moveRight = function () {
-      o.x += this.speed
+        o.move(o.x + o.speed)
     }
     o.collide = function (ball) {
         if (ball.y + ball.img.height > o.y) {
@@ -45,24 +54,39 @@ var Paddle = function () {
     }
     return o
 }
+var aInb = function (a, b) {
+    var o = a
+    if (b.y > o.y && b.y < o.y + o.img.height) {
+        if (b.x > o.x && b.x < o.x + o.img.width) {
+            // log('相撞')
+            return true
+        }
+    }
+    return false
+}
 var Block = function () {
-    var image =  imageFromPath('block.png')
+    var image = imageFromPath('block.png')
     var o = {
         img: image,
         x: 20,
         y: 20,
         w: 50,
         h: 20,
-
+        lifes: true,
     }
-
+    o.kill = function () {
+        o.lifes = false
+    }
+    o.collide = function (b) {
+        return o.lifes && ((aInb(o, b) || aInb(b, o)))
+    }
     return o
 }
 var Ball = function () {
-    var image =  imageFromPath('ball.png')
+    var image = imageFromPath('ball.png')
     var o = {
         img: image,
-        x: 50,
+        x: 100,
         y: 50,
         speedX: 6,
         speedY: 6,
@@ -82,63 +106,23 @@ var Ball = function () {
         }
     }
     o.fire = function () {
-         o.fired = true
+        o.fired = true
     }
+    o.rebound = function () {
+        o.speedY *= -1
+    }
+
 
     return o
 }
-var GuaGame = function () {
-    var g = {
-        actions: {},
-        keydowns: {},
-    }
-    var canvas = document.querySelector('#id-canvas')
-    var context = canvas.getContext('2d')
-    g.canvas = canvas
-    g.context = context
-    //draw
-    g.drawImage = function(GuaImage) {
-        g.context.drawImage(GuaImage.img, GuaImage.x, GuaImage.y)
-    }
-    //envents
-    window.addEventListener('keydown', function(event) {
-        g.keydowns[event.key] = true
-    })
-    window.addEventListener('keyup', function(event) {
-        g.keydowns[event.key] = false
-    })
-    //
-    g.registerAction = function (key, callback){
-        g.actions[key] = callback
-    }
-    // timer
-    setInterval(function(){
-        //envents
-        var actions = Object.keys(g.actions)
-        for (var i = 0; i < actions.length; i++) {
-            var key = actions[i]
-            if(g.keydowns[key]) {
-                //如果按键被按下， 调用注册用的action
-                g.actions[key]()
-            }
-        }
-        //update
-        g.update()
 
-        //clear
-        context.clearRect(0, 0, canvas.width, canvas.height)
-        //draw
-        g.draw()
-    }, 1000/50)
-
-    return g
-}
 var __main = function () {
 
-    var game = GuaGame()
+    var game = GuaGame(60)
     var paddle = Paddle()
     var ball = Ball()
     var block = Block()
+    var paused = false
     game.registerAction('a', function(){
         paddle.moveLeft()
     })
@@ -148,24 +132,36 @@ var __main = function () {
     game.registerAction('f', function(){
         ball.fire()
     })
+    //paused
+    window.addEventListener('keydown', function (event) {
+        if (event.key == 'p') {
+            paused = !paused
+        }
+    })
+
     //game.update()
     game.update = function() {
-        ball.move()
-        //clamp x
-        if(paddle.x < 0) {
-            paddle.x = 0
-        }else if(paddle.x > game.canvas.width - paddle.img.width) {
-            paddle.x = game.canvas.width - paddle.img.width
+        if (paused) {
+            return
         }
+        ball.move()
+
         if (paddle.collide(ball)) {
-            ball.speedY *= -1
+            ball.rebound()
+        }
+        if (block.collide(ball)) {
+            block.kill()
+            ball.rebound()
+
         }
     }
     //game.draw()
     game.draw = function () {
         game.drawImage(paddle)
         game.drawImage(ball)
-        game.drawImage(block)
+        if (block.lifes) {
+            game.drawImage(block)
+        }
     }
 }
 __main()
