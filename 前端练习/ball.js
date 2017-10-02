@@ -1,20 +1,21 @@
-var Ball = function () {
-    var image = imageFromPath('ball.png')
-    var o = {
-        img: image,
-        x: 100,
-        y: 50,
-        speedX: 6,
-        speedY: 6,
-        fired: false,
-    }
+var Ball = function (game) {
+    var o =  game.imageByName('ball')
+
+    // var image = imageFromPath('ball.png')
+
+    o.x = 100
+    o.y = 50
+    o.speedX = 6
+    o.speedY = 6
+    o.fired = false
+
     o.move = function () {
         if (o.fired) {
             // log('move')
-            if (o.x < 0 || (o.x + o.img.width) > 400) {
+            if (o.x < 0 || o.x > 400) {
                 o.speedX *= -1
             }
-            if (o.y < 0 || (o.y + o.img.height) >300) {
+            if (o.y < 0 || o.y >300) {
                 o.speedY *= -1
             }
             o.x += o.speedX

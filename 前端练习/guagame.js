@@ -1,7 +1,11 @@
-var GuaGame = function () {
+var GuaGame = function (images, runCallBack) {
+    //images 是一个对象， 里面是图片的引用名字和图片路径
+
+    //程序会在所有图片载入成功后才运行
     var g = {
         actions: {},
         keydowns: {},
+        images: {},
     }
     var canvas = document.querySelector('#id-canvas')
     var context = canvas.getContext('2d')
@@ -9,7 +13,7 @@ var GuaGame = function () {
     g.context = context
     //draw
     g.drawImage = function(GuaImage) {
-        g.context.drawImage(GuaImage.img, GuaImage.x, GuaImage.y)
+        g.context.drawImage(GuaImage.image, GuaImage.x, GuaImage.y)
     }
     //envents
     window.addEventListener('keydown', function(event) {
@@ -46,9 +50,44 @@ var GuaGame = function () {
             runloop()
         }, 1000/window.fps)
     }
-    setTimeout(function(){
-        runloop()
-    }, 1000/window.fps)
+    //
+    var loads = []
+    //预先载入所有图片
+    var names = Object.keys(images)
+    for (var i = 0; i < names.length; i++) {
+        let name = names[i]
+        var path = images[name]
+        let img = new Image()
+        img.src = path
+        img.onload = function () {
+            //存入g.images中
+            g.images[name] = img
+            //所有图片载入成功之后调用run
+            loads.push(1)
+            if (loads.length == names.length) {
+                g.run()
+            }
+        }
+    }
+    g.imageByName = function (name) {
+
+        var img = g.images[name]
+        var image = {
+            w: img.width,
+            h: img.height,
+            image: img,
+        }
+        return image
+    }
+
+    g.run = function () {
+        //开始运行程序
+        runCallBack(g)
+        setTimeout(function(){
+            runloop()
+        }, 1000/window.fps)
+    }
+
 
     return g
 }
