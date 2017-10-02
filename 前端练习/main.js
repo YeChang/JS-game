@@ -40,9 +40,9 @@ var __main = function () {
 
 
     var images = {
-        ball: 'ball.png',
-        paddle: 'paddle.png',
-        block: 'block.png',
+        ball: 'images/ball.png',
+        paddle: 'images/paddle.png',
+        block: 'images/block.png',
     }
 
 
@@ -73,7 +73,9 @@ var __main = function () {
             ball.move()
 
             if (paddle.collide(ball)) {
+                log('pengzhuang')
                 ball.rebound()
+
             }
             for (var i = 0; i < blocks.length; i++) {
                 var block = blocks[i]
@@ -90,6 +92,12 @@ var __main = function () {
         }
         //game.draw()
         game.draw = function () {
+            //draw背景
+            //draw label
+            game.context.fillText('分数:' + score, 20, 280)
+            game.context.fillStyle = '#554'
+            game.context.fillRect(0, 0, 400, 300)
+
             game.drawImage(paddle)
             game.drawImage(ball)
             for (var i = 0; i < blocks.length; i++) {
