@@ -1,4 +1,3 @@
-
 class SceneTitle extends GuaScene {
     constructor(game) {
         super(game)
@@ -8,7 +7,7 @@ class SceneTitle extends GuaScene {
             game.replaceScene(s)
         })
     }
-    
+
     draw() {
         //draw label
         this.game.context.fillText('按k开始游戏', 20, 280)
