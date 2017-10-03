@@ -5,6 +5,7 @@ var loadLevel = function (game, n) {
     var blocks = []
 
     for (var i = 0; i < level.length; i++) {
+        // log('leve',level)
         var p = level[i]
         var b = Block(game, p)
         blocks.push(b)
@@ -34,6 +35,20 @@ var enableDebugMode = function (game, enable) {
         var input = event.target
         // log(event, input.value)
         window.fps = Number(input.value)
+    })
+
+    //mouse event
+    game.canvas.addEventListener('mousedown',function (event) {
+        var x = event.offsetX
+        var y = event.offsetY
+        // log('鼠标坐标:', x, y)
+        // log('画一个block的坐标', x - (x % 40), y - (y % 19))
+        var p = [x - (x % 40), y - (y % 19)]
+        var b = Block(game, p)
+        window.blocks.push(b)
+    })
+    game.registerAction('q',function () {
+        addLevel()
     })
 }
 var __main = function () {

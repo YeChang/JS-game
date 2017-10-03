@@ -18,6 +18,9 @@ var Scene = function (game) {
     game.registerAction('f', function(){
         ball.fire()
     })
+    game.registerAction('q',function () {
+        addLevel()
+    })
     // game.registerAction('k', function(){
     //     var s = Scene()
     //     game.replaceScene(s)
@@ -69,16 +72,7 @@ var Scene = function (game) {
                 score += 100
             }
         }
-        //mouse event 2
-        game.canvas.addEventListener('mousedown',function (event) {
-            var x = event.offsetX
-            var y = event.offsetY
-            log('鼠标坐标:', x, y)
-            log('画一个block的坐标', x - (x % 40), y - (y % 19))
-            var p = [x - (x % 40), y - (y % 19)]
-            var b = Block(game, p)
-            window.blocks.push(b)
-        })
+
 
         //mouse event
         var enabeDrag = false

@@ -11,6 +11,9 @@ var Block = function (game, position) {
         alive: true,
         hp: p[2] || 1
     }
+    o.getPosition = function () {
+        return p
+    }
     o.image = img.image
     o.w = img.w
     o.h = img.h
