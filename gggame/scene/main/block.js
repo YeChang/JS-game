@@ -1,3 +1,32 @@
+// class Block {
+//     constructor(game, position) {
+//         this.p = position
+//         this.img = game.imageByName('block')
+//         this.o = {
+//             // img: image,
+//             x: this.p[0],
+//             y: this.p[1],
+//             alive: true,
+//             hp: this.p[2] || 1
+//         }
+//
+//     }
+//     getPosition() {
+//         return this.p
+//     }
+//     this.o.image = this.img.image
+//     this.o.w = this.img.w
+//     this.o.h = this.img.h
+//     kill() {
+//         this.o.hp--
+//         if (this.o.hp < 1) {
+//             this.o.alive = false
+//         }
+//     }
+//     collide(b) {
+//         return this.o.alive && ((aInb(this.o, b) || aInb(b, this.o)))
+//     }
+// }
 var Block = function (game, position) {
     //position 是 [0, 0] 格式
     var p = position

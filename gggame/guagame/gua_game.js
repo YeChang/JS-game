@@ -38,7 +38,7 @@ class GuaGame {
         this.actions[key] = callback
     }
     runloop() {
-        log(window.fps)
+        // log(window.fps)
         //envents
         var self = this
         var actions = Object.keys(this.actions)

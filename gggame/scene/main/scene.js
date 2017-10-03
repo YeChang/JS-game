@@ -18,9 +18,7 @@ var Scene = function (game) {
     game.registerAction('f', function(){
         ball.fire()
     })
-    game.registerAction('q',function () {
-        addLevel()
-    })
+
     // game.registerAction('k', function(){
     //     var s = Scene()
     //     game.replaceScene(s)
@@ -91,7 +89,7 @@ var Scene = function (game) {
             var y = event.offsetY
 
             if (enabeDrag) {
-                log('move')
+                // log('move')
                 ball.x = x
                 ball.y = y
             }

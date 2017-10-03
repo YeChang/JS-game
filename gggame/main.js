@@ -1,7 +1,8 @@
 
 var loadLevel = function (game, n) {
     n = n - 1
-    let level = levels[n]
+    let l = Levels.instance()
+    let level = l.levels[n]
     var blocks = []
 
     for (var i = 0; i < level.length; i++) {
@@ -47,9 +48,19 @@ var enableDebugMode = function (game, enable) {
         var b = Block(game, p)
         window.blocks.push(b)
     })
-    game.registerAction('q',function () {
-        addLevel()
+    //用game.registerAction的话 每秒要调用addLevel 好多次。
+    window.addEventListener('keydown', event=>{
+        if (event.key == 'q') {
+            let l = Levels.instance()
+            l.addLevel()
+        }
     })
+    // game.registerAction('q',function () {
+    //     window.fps = 1
+    //     let l = Levels.instance()
+    //     l.addLevel()
+    //
+    // })
 }
 var __main = function () {
     var images = {
