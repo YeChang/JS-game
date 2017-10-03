@@ -8,7 +8,7 @@ var Paddle = function (game) {
     // }
     o.speed = 15
     o.x = 100
-    o.y = 250
+    o.y = 270
     o.move = function (x) {
         if (x < 0) {
             x = 0

@@ -29,11 +29,11 @@ var Scene = function (game) {
         //draw label
         game.context.fillText('分数:' + score, 20, 280)
         game.context.fillStyle = '#554'
-        game.context.fillRect(0, 0, 400, 300)
+        game.context.fillRect(0, 0, 400, 380)
 
         game.drawImage(paddle)
         game.drawImage(ball)
-        for (var i = 0; i < blocks.length; i++) {
+        for (var i = 0; i < window.blocks.length; i++) {
             var block = blocks[i]
             if (block.alive) {
                 game.drawImage(block)
@@ -69,7 +69,16 @@ var Scene = function (game) {
                 score += 100
             }
         }
-
+        //mouse event 2
+        game.canvas.addEventListener('mousedown',function (event) {
+            var x = event.offsetX
+            var y = event.offsetY
+            log('鼠标坐标:', x, y)
+            log('画一个block的坐标', x - (x % 40), y - (y % 19))
+            var p = [x - (x % 40), y - (y % 19)]
+            var b = Block(game, p)
+            window.blocks.push(b)
+        })
 
         //mouse event
         var enabeDrag = false
@@ -77,6 +86,7 @@ var Scene = function (game) {
             var x = event.offsetX
             var y = event.offsetY
             //检查是否点zhong了ball
+            // log('鼠标坐标:', x, y)
             if (ball.hasPoint(x, y)) {
                 // 设置一个拖拽状态
                 enabeDrag = true

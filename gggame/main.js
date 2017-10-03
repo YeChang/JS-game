@@ -9,7 +9,7 @@ var loadLevel = function (game, n) {
         var b = Block(game, p)
         blocks.push(b)
     }
-    log('blocks', blocks)
+    // log('blocks', blocks)
     return blocks
 }
 var blocks = []
