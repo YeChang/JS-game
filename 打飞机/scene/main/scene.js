@@ -2,25 +2,64 @@ class Scene extends GuaScene {
     constructor(game) {
         super(game)
         //初始化
-
         this.setup()
-
+        this.setupInputs()
     }
     setup() {
+        this.numberOfEnemies = 10
         this.bg = GuaImage.new(this.game, 'sky')
-        this.player = GuaImage.new(this.game, 'player')
+        this.player = Player.new(this.game)
+        // this.player = GuaImage.new(this.game, 'player')
         this.cloud = GuaImage.new(this.game, 'cloud')
-
-        this.player.x = 100
-        this.player.y = 270
+        this.cloud2 = GuaImage.new(this.game, 'cloud')
+        this.cloud2.x = 240
+        this.cloud2.y = 240
         log('this.bg', this.cloud)
+
+        //先画背景
         this.addElement(this.bg)
         this.addElement(this.player)
         this.addElement(this.cloud)
-        // this.addElement(this.bg)
+        this.addElement(this.cloud2)
+        //
+        this.addEnemies()
+
+
+    }
+
+    addEnemies() {
+        var es = []
+        for (var i = 0; i < this.numberOfEnemies; i++) {
+            var e = Enemy.new(this.game)
+            es.push(e)
+            this.addElement(e)
+        }
+        this.enemies = es
+    }
+    setupInputs() {
+        var game = this.game
+        var s = this
+        game.registerAction('s', function(){
+            s.player.moveDown()
+        })
+        game.registerAction('w', function(){
+            s.player.moveUp()
+        })
+        game.registerAction('a', function(){
+            s.player.moveLeft()
+        })
+        game.registerAction('d', function(){
+            s.player.moveRight()
+        })
+        game.registerAction('j', function(){
+            s.player.fire()
+            log('fire', s.player.fire())
+        })
     }
     update() {
+        super.update()
         this.cloud.y += 1
+        this.cloud2.y += 1
     }
 }
 
