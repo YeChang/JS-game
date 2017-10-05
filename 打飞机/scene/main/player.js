@@ -34,9 +34,12 @@ class Player extends GuaImage {
             b.x = x
             b.y = y
             this.scene.addElement(b)
+
+
         }
 
     }
+
     moveLeft() {
         if (this.x < 0) {
             this.x = this.x

@@ -27,14 +27,15 @@ var __main = function () {
         enemy0: 'images/enemy0.png',
         enemy1: 'images/enemy1.png',
         enemy2: 'images/enemy2.png',
-        enemy3: 'images/enemy3.png',
-
+        // enemy3: 'images/enemy3.png',
+        fire: 'images/fire.png',
         sky: 'images/Background/starBackground.png',
         cloud: 'images/Background/cloud.png'
     }
 
     var game = GuaGame.instance(30, images, function (g) {
         var s = Scene.new(g)
+        // var s = SceneTitle.new(g)
         g.runWithScene(s)
     })
     enableDebugMode(game, true)

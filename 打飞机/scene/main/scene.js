@@ -6,7 +6,8 @@ class Scene extends GuaScene {
         this.setupInputs()
     }
     setup() {
-        this.numberOfEnemies = 10
+        this.numberOfCurrentEnemies = 0
+        this.numberOfEnemies = 12
         this.bg = GuaImage.new(this.game, 'sky')
         this.player = Player.new(this.game)
         // this.player = GuaImage.new(this.game, 'player')
@@ -14,7 +15,7 @@ class Scene extends GuaScene {
         this.cloud2 = GuaImage.new(this.game, 'cloud')
         this.cloud2.x = 240
         this.cloud2.y = 240
-        log('this.bg', this.cloud)
+        // log('this.bg', this.cloud)
 
         //先画背景
         this.addElement(this.bg)
@@ -23,6 +24,7 @@ class Scene extends GuaScene {
         this.addElement(this.cloud2)
         //
         this.addEnemies()
+        log('elements',this.elements)
 
 
     }
@@ -32,6 +34,7 @@ class Scene extends GuaScene {
         for (var i = 0; i < this.numberOfEnemies; i++) {
             var e = Enemy.new(this.game)
             es.push(e)
+            this.numberOfCurrentEnemies++
             this.addElement(e)
         }
         this.enemies = es
@@ -53,10 +56,13 @@ class Scene extends GuaScene {
         })
         game.registerAction('j', function(){
             s.player.fire()
-            log('fire', s.player.fire())
+            // log('fire', s.player.fire())
         })
     }
     update() {
+        if (this.numberOfCurrentEnemies < 6) {
+            this.addEnemies()
+        }
         super.update()
         this.cloud.y += 1
         this.cloud2.y += 1
