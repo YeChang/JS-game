@@ -45,7 +45,11 @@ class Bullet extends GuaImage {
 
     draw() {
         if (this.hp < 0) {
-            return
+            for (var i = 0; i < this.scene.elements.length; i++) {
+                if (this.scene.elements[i] instanceof Bullet) {
+                    this.scene.elements.splice(i , 1)
+                }
+            }
         }
         this.game.drawImage(this)
     }
