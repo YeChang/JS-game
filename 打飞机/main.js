@@ -30,12 +30,20 @@ var __main = function () {
         // enemy3: 'images/enemy3.png',
         fire: 'images/fire.png',
         sky: 'images/Background/starBackground.png',
-        cloud: 'images/Background/cloud.png'
+        cloud: 'images/Background/cloud.png',
+        //动画
+        w1: 'images/walking/w1.png',
+        w2: 'images/walking/w2.png',
+        w3: 'images/walking/w3.png',
+        w4: 'images/walking/w4.png',
+        w5: 'images/walking/w5.png',
+        w6: 'images/walking/w6.png',
+
     }
 
     var game = GuaGame.instance(30, images, function (g) {
-        var s = Scene.new(g)
-        // var s = SceneTitle.new(g)
+        // var s = Scene.new(g)
+        var s = SceneTitle.new(g)
         g.runWithScene(s)
     })
     enableDebugMode(game, true)

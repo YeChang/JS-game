@@ -17,16 +17,18 @@ class SceneTitle extends GuaScene {
     constructor(game) {
         super(game)
         //初始化
-        var label = GuaLabel.new(game, 'hello')
+        var label = GuaLabel.new(game, 'hello guagua')
         this.addElement(label)
 
-        game.registerAction('k', function(){
-            var s = Scene.new(game)
-            game.replaceScene(s)
-        })
+        // game.registerAction('k', function(){
+        //     var s = Scene.new(game)
+        //     game.replaceScene(s)
+        // })
+        var w = GuaAnimation.new(game)
+        w.x = 100
+        w.y = 200
+        this.addElement(w)
 
-        var ps = guaparticlesystem.new(game)
-        this.addElement(ps)
     }
 
     draw() {
