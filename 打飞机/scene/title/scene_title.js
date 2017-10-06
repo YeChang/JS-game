@@ -27,10 +27,19 @@ class SceneTitle extends GuaScene {
         var w = GuaAnimation.new(game)
         w.x = 100
         w.y = 200
+        this.w = w
         this.addElement(w)
-
+        this.setupInputs()
     }
-
+    setupInputs() {
+        var self = this
+        this.game.registerAction('a', function (keyStatus) {
+            self.w.move(-5, keyStatus)
+        })
+        this.game.registerAction('d', function (keyStatus) {
+            self.w.move(5, keyStatus)
+        })
+    }
     draw() {
         super.draw()
         // //draw label

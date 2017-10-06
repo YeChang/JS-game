@@ -11,11 +11,11 @@ class GuaGame {
         this.context = this.canvas.getContext('2d')
 
         window.addEventListener('keydown', event=>{
-            this.keydowns[event.key] = true
+            this.keydowns[event.key] = 'down'
         })
         var self = this//jiu yu fa
         window.addEventListener('keyup', function(event) {
-            self.keydowns[event.key] = false
+            self.keydowns[event.key] = 'up'
         })
         this.init()
     }
@@ -45,9 +45,14 @@ class GuaGame {
         var actions = Object.keys(this.actions)
         for (var i = 0; i < actions.length; i++) {
             var key = actions[i]
-            if(this.keydowns[key]) {
+            var status = g.keydowns[key]
+            if(status == 'down') {
                 //如果按键被按下， 调用注册用的action
-                this.actions[key]()
+                this.actions[key]('down')
+            }else if (status == 'up') {
+                this.actions[key]('up')
+                //delete this key`s status
+                this.keydowns[key] = null
             }
         }
         //update
