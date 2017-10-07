@@ -23,7 +23,7 @@ var enableDebugMode = function (game, enable) {
 var __main = function () {
     var images = {
         bird: 'img/bird.png',
-        bg: 'img/bg_day.png',
+        bg: 'img/background.png',
         pipetop: 'img/pipetop.png',
         pipebottom: 'img/pipebottom.png',
         land: 'img/land.png', 

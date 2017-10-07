@@ -16,24 +16,62 @@ class GuaLabel {
 class SceneTitle extends GuaScene {
     constructor(game) {
         super(game)
+
+
         var bg = GuaImage.new(game, 'bg')
         this.addElement(bg)
-        //loop the moving land
+        this.bird = Bird.new(game)
+        this.addElement(this.bird)
+        // loop the moving land
         this.grounds = []
-        for (var i = 0; i < 30; i++) {
+        this.skipCount = 7
+        for (var i = 0; i < 20; i++) {
             var g = GuaImage.new(game, 'land')
-            g.x = i * 19
-            g.y = 410
+            g.x = i * 40
+            g.y = 430
             this.addElement(g)
             this.grounds.push(g)
         }
+        this.setupInputs()
+    }
+    setupInputs() {
+        var game = this.game
+        var self = this
+        game.registerAction('s', function(){
+            self.bird.moveDown()
+        })
+        game.registerAction('w', function(){
+            self.bird.moveUp()
+        })
+        game.registerAction('a', function(){
+            self.bird.moveLeft()
+        })
+        game.registerAction('d', function(){
+            self.bird.moveRight()
+        })
+        game.registerAction(' ', function(){
+            self.bird.jump()
+        })
     }
     update() {
         super.update()
         //
-        for (var i = 0; this.grounds < 10; i++) {
+        var vx = 2
+        if (this.bird.y > 420) {
+            this.bird.y = 400
+        }       
+        this.bird.y += 10
+
+        this.skipCount--
+        var offset = -5
+        if (this.skipCount == 0) {
+            this.skipCount = 7
+            offset = 30
+        }
+        // log('bird.x', this.elements[0].x)
+        for (var i = 0; i < this.grounds.length; i++) {
             var g = this.grounds[i]
-            g.x -= 5
+            g.x += offset
 
         }
 
