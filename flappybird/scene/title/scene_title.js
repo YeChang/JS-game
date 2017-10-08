@@ -20,8 +20,15 @@ class SceneTitle extends GuaScene {
 
         var bg = GuaImage.new(game, 'bg')
         this.addElement(bg)
-        this.bird = Bird.new(game)
-        this.addElement(this.bird)
+
+        var w = GuaAnimation.new(game)
+        w.x = 100
+        w.y = 180
+        this.w = w
+        this.addElement(w)
+        
+        // this.bird = Bird.new(game)
+        // this.addElement(this.bird)
         // loop the moving land
         this.grounds = []
         this.skipCount = 7
@@ -32,35 +39,35 @@ class SceneTitle extends GuaScene {
             this.addElement(g)
             this.grounds.push(g)
         }
-        this.setupInputs()
+        // this.setupInputs()
     }
-    setupInputs() {
-        var game = this.game
-        var self = this
-        game.registerAction('s', function(){
-            self.bird.moveDown()
-        })
-        game.registerAction('w', function(){
-            self.bird.moveUp()
-        })
-        game.registerAction('a', function(){
-            self.bird.moveLeft()
-        })
-        game.registerAction('d', function(){
-            self.bird.moveRight()
-        })
-        game.registerAction(' ', function(){
-            self.bird.jump()
-        })
-    }
+    // setupInputs() {
+    //     var game = this.game
+    //     var self = this
+    //     game.registerAction('s', function(){
+    //         self.bird.moveDown()
+    //     })
+    //     game.registerAction('w', function(){
+    //         self.bird.moveUp()
+    //     })
+    //     game.registerAction('a', function(){
+    //         self.bird.moveLeft()
+    //     })
+    //     game.registerAction('d', function(){
+    //         self.bird.moveRight()
+    //     })
+    //     game.registerAction(' ', function(){
+    //         self.bird.jump()
+    //     })
+    // }
     update() {
         super.update()
         //
         var vx = 2
-        if (this.bird.y > 420) {
-            this.bird.y = 400
-        }       
-        this.bird.y += 10
+        // if (this.bird.y > 420) {
+        //     this.bird.y = 400
+        // }
+        // this.bird.y += 10
 
         this.skipCount--
         var offset = -5
