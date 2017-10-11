@@ -45,7 +45,7 @@ class GuaGame {
         var actions = Object.keys(this.actions)
         for (var i = 0; i < actions.length; i++) {
             var key = actions[i]
-            var status = g.keydowns[key]
+            var status = this.keydowns[key]
             if(status == 'down') {
                 //如果按键被按下， 调用注册用的action
                 this.actions[key]('down')
