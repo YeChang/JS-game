@@ -19,7 +19,7 @@ class GuaGame {
         })
         this.init()
     }
-    //单粒性
+    //单例性
     static instance(...args) {
         this.i = this. i || new this(...args)
         return this.i
