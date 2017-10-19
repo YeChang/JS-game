@@ -91,7 +91,6 @@ class GuaGame {
         }
     }
     textureByName(name) {
-
         var img = this.images[name]
         return img
     }

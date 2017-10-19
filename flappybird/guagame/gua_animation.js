@@ -26,6 +26,9 @@ class GuaAnimation {
         //重力和加速度
         this.gy = 10 
         this.vy = 10
+
+        //rotation
+        this.rotation = 0
     }
     static new(game) {
         return new this(game)
@@ -43,6 +46,13 @@ class GuaAnimation {
         //更新受力
         this.y += this.vy        
         this.vy += this.gy * 0.2
+
+        //update rotation
+        if (this.rotation < 45) {
+            this.rotation += 7
+        }
+
+
         if (this.y >= 390) {
             this.y = 390
         }
@@ -51,21 +61,22 @@ class GuaAnimation {
     
     draw() {
         var context = this.game.context
+        context.save()
+        // Set the origin to the center of the image
+
+        var w2 = this.w / 2
+        var h2 = this.h / 2
+
+        context.translate(this.x + w2, this.y + h2)
         if (this.flipX) {
-            context.save()
-            // Set the origin to the center of the image
-
-            var x = this.x + this.w/2
-            context.translate(x, 0)
-            context.scale(-1, 1)
-            context.translate(-x, 0)
-
-            // Draw the image
-            context.drawImage(this.texture, this.x, this.y)
-            context.restore()
-        }else {
-            context.drawImage(this.texture, this.x, this.y)
+            context.scale(-1, 1)            
         }
+        context.rotate(this.rotation * Math.PI / 180)
+        context.translate(-w2, -h2)
+
+        // Draw the image
+        context.drawImage(this.texture, 0, 0)
+        context.restore()
 
     }
     move(x, keyStatus) {
@@ -83,6 +94,7 @@ class GuaAnimation {
     }
     jump() {
         this.vy = -10
+        this.rotation = -45
     }
     changeAnimation(name) {
         this.animationName = name
